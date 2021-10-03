@@ -2,6 +2,7 @@
 
 namespace Rikudou\JsonRpcBundle\Service;
 
+use ArgumentCountError;
 use Error;
 use Rikudou\JsonRpcBundle\Enum\JsonRpcErrorCode;
 use Rikudou\JsonRpcBundle\Exception\JsonRpcInvalidParamsException;
@@ -69,6 +70,8 @@ final class JsonRpcResponder
 
         try {
             return new JsonRpcSingleResponse($request, $method->execute(new JsonRpcRequestParams($request->getParams())));
+        } catch (ArgumentCountError) {
+            throw new JsonRpcInvalidParamsException('Mandatory parameters are missing');
         } catch (Error $e) {
             if (str_starts_with($e->getMessage(), 'Unknown named parameter')) {
                 throw new JsonRpcInvalidParamsException('You are providing extra parameters not understood by this method');
