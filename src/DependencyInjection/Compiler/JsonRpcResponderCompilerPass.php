@@ -61,6 +61,69 @@ final class JsonRpcResponderCompilerPass implements CompilerPassInterface
             }
         }
 
+        $callables = $container->getParameter('rikudou.json_rpc.internal.callables');
+        assert(is_array($callables));
+        foreach ($callables as $callable) {
+            $name = $callable['name'] ?? null;
+            $callable = $callable['callable'] ?? null;
+            $callableToTest = $callable;
+
+            if (!$name || !$callable) {
+                throw new LogicException('Both name and callable must be specified');
+            }
+
+            if (is_array($callable)) {
+                $callableServiceId = $callable[0];
+                $callableMethod = $callable[1];
+
+                if (str_starts_with($callableServiceId, '@')) {
+                    $callableServiceId = substr($callableServiceId, 1);
+                    $callableServiceDefinition = $container->getDefinition($callableServiceId);
+                    $callableClass = $callableServiceDefinition->getClass();
+                    if ($callableClass === null || !class_exists($callableClass)) {
+                        throw new LogicException("No class is configured for service '{$callableServiceId}'");
+                    }
+                    $callableClassInstance = (new ReflectionClass($callableClass))->newInstanceWithoutConstructor();
+                    $callableToTest = [$callableClassInstance, $callableMethod];
+                    $callable = [new Reference($callableServiceId), $callableMethod];
+                }
+            }
+
+            if (!is_callable($callableToTest)) {
+                throw new LogicException("'{$this->getCallableStringRepresentation($callable)}' is not a valid callable");
+            }
+
+            $decoratorDefinition = new Definition(CallableJsonRpcMethod::class, [
+                $name,
+                $callable,
+            ]);
+            $container->setDefinition("rikudou.json_rpc.callable.{$name}", $decoratorDefinition);
+            $result[] = new Reference("rikudou.json_rpc.callable.{$name}");
+        }
+
         $container->getDefinition('rikudou.json_rpc.responder')->setArgument(0, $result);
+    }
+
+    private function getCallableStringRepresentation(mixed $data): string
+    {
+        if (is_string($data)) {
+            return $data;
+        }
+
+        if (is_array($data)) {
+            $result = '[';
+            foreach ($data as $value) {
+                if ($value instanceof Reference) {
+                    $value = "@{$value}";
+                }
+                $result .= "\"{$value}\", ";
+            }
+            $result = substr($result, 0, -2);
+            $result .= ']';
+
+            return $result;
+        }
+
+        throw new LogicException('Cannot print callable');
     }
 }

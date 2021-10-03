@@ -235,3 +235,28 @@ final class JsonRpcController
     }
 }
 ```
+
+## Registering other callables
+
+You can register other callables manually in a configuration file (for example `config/packages/json_rpc.yaml`).
+
+Here's an example configuration:
+
+```yaml
+rikudou_json_rpc:
+  callables:
+    - name: myMethod
+      callable: someGlobalFunction
+```
+
+These formats of callables are supported:
+
+- functions
+  - `globalFunction`
+- static methods
+  - `App\MyClass::someMethod`
+  - `['App\MyClass', 'someMethod']`
+- service method
+  - `['@App\MyService', 'someMethod']`
+
+Note that the service name starts with `@`.

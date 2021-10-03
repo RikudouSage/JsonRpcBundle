@@ -14,5 +14,8 @@ final class RikudouJsonRpcExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resource/config'));
         $loader->load('services.yaml');
         $loader->load('aliases.yaml');
+
+        $configs = $this->processConfiguration(new Configuration(), $configs);
+        $container->setParameter('rikudou.json_rpc.internal.callables', $configs['callables']);
     }
 }
