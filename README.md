@@ -37,10 +37,11 @@ of locating the correct method and providing response.
 
 ## Creating methods
 
-Creating methods is very simple and you have two options:
+Creating methods is very simple and you have 3 options:
 
 1. use the `Rikudou\JsonRpcBundle\Attribute\JsonRpcMethod` attribute in a callable object (implementing `__invoke()`)
 2. implement the `\Rikudou\JsonRpcBundle\JsonRpc\JsonRpcMethod` interface
+3. [registering callables manually](#registering-other-callables)
 
 Note that while the attribute and interface have the same name, the namespace is different.
 
