@@ -247,6 +247,12 @@ rikudou_json_rpc:
   callables:
     - name: myMethod
       callable: someGlobalFunction
+    - name: myOtherMethod
+      callable: App\MyClass::myStaticMethod
+    - name: myThirdMethod
+      callable: [App\MyClass, myStaticMethod]
+    - name: myFourthMethod
+      callable: ['@App\MyService', myInstanceMethod]
 ```
 
 These formats of callables are supported:
