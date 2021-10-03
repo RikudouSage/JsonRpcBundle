@@ -20,6 +20,7 @@
         "phpstan/extension-installer": "^1.1"
     },
     "scripts": {
-        "fixer": "php-cs-fixer fix src --verbose"
+        "fixer": "php-cs-fixer fix src --verbose",
+        "phpstan": "phpstan analyse --level max src"
     }
 }
