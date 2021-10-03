@@ -2,6 +2,7 @@
     "name": "rikudou/json-rpc-bundle",
     "description": "JSON-RPC bundle for Symfony using modern php",
     "type": "symfony-bundle",
+    "license": "MIT",
     "require": {
         "php": "^8.0",
         "symfony/framework-bundle": "^5.0",
