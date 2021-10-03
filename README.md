@@ -1,3 +1,4 @@
+##### Table of Contents
 - [JSON-RPC bundle for Symfony.](#json-rpc-bundle-for-symfony)
   * [Installation](#installation)
   * [Usage](#usage)
