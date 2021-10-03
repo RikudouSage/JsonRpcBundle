@@ -165,7 +165,7 @@ The `JsonRpcSingleRequest` object contains these methods:
 
 The `JsonRpcBatchRequest` contains these methods:
 
-- `getRequests(): iterable<JsonRpcSingleRequest>` - returns list of individual requests7
+- `getRequests(): iterable<JsonRpcSingleRequest>` - returns list of individual requests
 
 In your controller you can also typehint the concrete class (`JsonRpcSingleRequest` or `JsonRpcBatchRequest`) but
 in that case you will get a `TypeError` when the other type of request arrives.
