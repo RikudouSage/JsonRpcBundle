@@ -1,3 +1,9 @@
+# JSON-RPC bundle for Symfony.
+
+This allows you to respond and handle JSON-RPC requests using modern php.
+
+Both batch requests and single requests are supported.
+
 ##### Table of Contents
 - [JSON-RPC bundle for Symfony.](#json-rpc-bundle-for-symfony)
   * [Installation](#installation)
@@ -9,11 +15,6 @@
   * [Working with request object](#working-with-request-object)
   * [Working with response object](#working-with-response-object)
 
-# JSON-RPC bundle for Symfony.
-
-This allows you to respond and handle JSON-RPC requests using modern php.
-
-Both batch requests and single requests are supported.
 
 ## Installation
 
