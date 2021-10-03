@@ -1,3 +1,13 @@
+- [JSON-RPC bundle for Symfony.](#json-rpc-bundle-for-symfony)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Creating methods](#creating-methods)
+    + [Example with attribute](#example-with-attribute)
+    + [Example with interface](#example-with-interface)
+    + [Registering other callables](#registering-other-callables)
+  * [Working with request object](#working-with-request-object)
+  * [Working with response object](#working-with-response-object)
+
 # JSON-RPC bundle for Symfony.
 
 This allows you to respond and handle JSON-RPC requests using modern php.
@@ -151,7 +161,7 @@ final class MyMethod implements JsonRpcMethod
 }
 ```
 
-## Registering other callables
+### Registering other callables
 
 You can register other callables manually in a configuration file (for example `config/packages/json_rpc.yaml`).
 
