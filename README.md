@@ -39,8 +39,8 @@ of locating the correct method and providing response.
 
 Creating methods is very simple and you have 3 options:
 
-1. use the `Rikudou\JsonRpcBundle\Attribute\JsonRpcMethod` attribute in a callable object (implementing `__invoke()`)
-2. implement the `\Rikudou\JsonRpcBundle\JsonRpc\JsonRpcMethod` interface
+1. [use the `Rikudou\JsonRpcBundle\Attribute\JsonRpcMethod` attribute in a callable object (implementing `__invoke()`)](#example-with-attribute)
+2. [implement the `\Rikudou\JsonRpcBundle\JsonRpc\JsonRpcMethod` interface](#example-with-interface)
 3. [registering callables manually](#registering-other-callables)
 
 Note that while the attribute and interface have the same name, the namespace is different.
@@ -151,6 +151,38 @@ final class MyMethod implements JsonRpcMethod
 }
 ```
 
+## Registering other callables
+
+You can register other callables manually in a configuration file (for example `config/packages/json_rpc.yaml`).
+
+Here's an example configuration:
+
+```yaml
+rikudou_json_rpc:
+  callables:
+    - name: myMethod
+      callable: someGlobalFunction
+    - name: myOtherMethod
+      callable: App\MyClass::myStaticMethod
+    - name: myThirdMethod
+      callable: [App\MyClass, myStaticMethod]
+    - name: myFourthMethod
+      callable: ['@App\MyService', myInstanceMethod]
+```
+
+These formats of callables are supported:
+
+- functions
+  - `globalFunction`
+- static methods
+  - `App\MyClass::someMethod`
+  - `['App\MyClass', 'someMethod']`
+- service method
+  - `['@App\MyService', 'someMethod']`
+
+Note that the service name starts with `@`.
+
+
 ## Working with request object
 
 If you want to do some checks on the request object you can do so before passing it to the `JsonRpcResponder` service.
@@ -236,34 +268,3 @@ final class JsonRpcController
     }
 }
 ```
-
-## Registering other callables
-
-You can register other callables manually in a configuration file (for example `config/packages/json_rpc.yaml`).
-
-Here's an example configuration:
-
-```yaml
-rikudou_json_rpc:
-  callables:
-    - name: myMethod
-      callable: someGlobalFunction
-    - name: myOtherMethod
-      callable: App\MyClass::myStaticMethod
-    - name: myThirdMethod
-      callable: [App\MyClass, myStaticMethod]
-    - name: myFourthMethod
-      callable: ['@App\MyService', myInstanceMethod]
-```
-
-These formats of callables are supported:
-
-- functions
-  - `globalFunction`
-- static methods
-  - `App\MyClass::someMethod`
-  - `['App\MyClass', 'someMethod']`
-- service method
-  - `['@App\MyService', 'someMethod']`
-
-Note that the service name starts with `@`.
