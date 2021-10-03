@@ -25,6 +25,6 @@ final class CallableJsonRpcMethod implements JsonRpcMethod
 
     public function execute(JsonRpcRequestParams $params): int|string|null|float|JsonSerializable|array|stdClass
     {
-        return ($this->method)(...$params->getParams());
+        return ($this->method)(...($params->hasParams() ? $params->getParams() : []));
     }
 }
