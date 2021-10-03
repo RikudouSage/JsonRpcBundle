@@ -1,0 +1,2 @@
+services:
+  Rikudou\JsonRpcBundle\Service\JsonRpcResponder: '@rikudou.json_rpc.responder'

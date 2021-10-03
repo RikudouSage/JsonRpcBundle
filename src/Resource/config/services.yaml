@@ -1,0 +1,26 @@
+services:
+
+  rikudou.json_rpc.request_parser:
+    class: Rikudou\JsonRpcBundle\Service\JsonRpcRequestParser
+    arguments:
+      - '@request_stack'
+
+  # arguments defined in \Rikudou\JsonRpcBundle\DependencyInjection\Compiler\JsonRpcResponderCompilerPass
+  rikudou.json_rpc.responder:
+    class: Rikudou\JsonRpcBundle\Service\JsonRpcResponder
+
+  rikudou.json_rpc.exception_listener:
+    class: Rikudou\JsonRpcBundle\Listener\JsonRpcExceptionListener
+    arguments:
+      - '@rikudou.json_rpc.request_parser'
+    tags:
+      - kernel.event_subscriber
+
+  rikudou.json_rpc.argument_resolver:
+    class: Rikudou\JsonRpcBundle\ArgumentResolver\JsonRpcRequestArgumentResolver
+    arguments:
+      - '@rikudou.json_rpc.request_parser'
+    tags:
+      - name: controller.argument_value_resolver
+        priority: 150
+
